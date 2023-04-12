@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "108808000589",
+    "project_id": "war-history-1562c",
+    "storage_bucket": "war-history-1562c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:108808000589:android:88f33699f179e403c87804",
+        "android_client_info": {
+          "package_name": "com.example.warhistory"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "108808000589-tachdkrssrnecjdsl6j1lphul9nco1pi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAAnVkPjy6GqiaXQ4pNDrdk50TgFa1iTv8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "108808000589-tachdkrssrnecjdsl6j1lphul9nco1pi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
