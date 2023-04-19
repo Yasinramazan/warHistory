@@ -4,9 +4,9 @@ import 'package:warhistory/Pages/Homepage.dart';
 import 'package:warhistory/Theme/theme.dart';
 import 'firebase_options.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Firebase.initializeApp(
+  await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(const MyApp());
