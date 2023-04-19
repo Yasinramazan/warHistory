@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:warhistory/Pages/Homepage.dart';
+import 'package:warhistory/Theme/theme.dart';
 import 'firebase_options.dart';
 
-void main() async {
-  await Firebase.initializeApp(
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(const MyApp());
@@ -16,11 +18,6 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: Home());
+    return MaterialApp(title: 'Flutter Demo', theme: myTheme, home: Home());
   }
 }
