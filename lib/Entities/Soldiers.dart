@@ -11,12 +11,12 @@ class Soldier extends Man {
       String DeathDay,
       String Explanation,
       String Photo,
-      this.BattlesValue,
-      this.WarsValue,
+      this.Battles,
+      this.Wars,
       this.Stateman,
       List<String> Sources)
       : super(Id, Name, Birthday, DeathDay, Explanation, Photo, Sources);
-  Battle BattlesValue;
-  War WarsValue;
+  List<String> Battles;
+  List<String> Wars;
   bool Stateman;
 }

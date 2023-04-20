@@ -7,10 +7,10 @@ class Map extends MainEntity {
       {required String Id,
       required String Name,
       required this.Photo,
-      required this.BattleValue,
+      required this.BattleId,
       required List<String> Sources})
       : super(Id, Name, Sources);
 
   String Photo;
-  Battle BattleValue;
+  String BattleId;
 }

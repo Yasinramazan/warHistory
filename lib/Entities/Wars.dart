@@ -8,5 +8,5 @@ class War extends Challange {
       : super(Id, Name, Winners, Losers, Sources);
   String PreDate;
   String PostDate;
-  List<Battle> Battles;
+  List<String> Battles;
 }
