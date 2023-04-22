@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:warhistory/Entities/Soldiers.dart';
+import 'package:warhistory/Pages/AddingPages/AddSoldier.dart';
+import 'package:warhistory/Pages/ContentPages/SoldierPage.dart';
 
 import '../Services/soldierService.dart';
 
@@ -39,7 +41,9 @@ class Home extends StatelessWidget {
                   return Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        goPage(index, context);
+                      },
                       child: ListTile(
                         title: Text(content[index]),
                         trailing: const Icon(Icons.arrow_forward_ios),
@@ -52,5 +56,14 @@ class Home extends StatelessWidget {
         ]),
       ),
     );
+  }
+
+  void goPage(int index, BuildContext context) {
+    if (index == 0) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => SoldierPage()),
+      );
+    }
   }
 }
