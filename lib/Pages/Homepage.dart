@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:warhistory/Entities/Soldiers.dart';
 import 'package:warhistory/Pages/AddingPages/AddSoldier.dart';
 import 'package:warhistory/Pages/ContentPages/SoldierPage.dart';
+import 'package:warhistory/Pages/ListPages/SoldierList.dart';
 
 import '../Services/soldierService.dart';
 
@@ -62,7 +63,7 @@ class Home extends StatelessWidget {
     if (index == 0) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => SoldierPage()),
+        MaterialPageRoute(builder: (context) => SoldierList()),
       );
     }
   }
