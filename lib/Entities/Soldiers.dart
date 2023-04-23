@@ -1,8 +1,5 @@
 import 'package:warhistory/Entities/Mans.dart';
 
-import 'Battles.dart';
-import 'Wars.dart';
-
 class Soldier extends Man {
   Soldier(
       String Id,
