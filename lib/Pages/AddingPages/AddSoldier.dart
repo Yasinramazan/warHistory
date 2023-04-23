@@ -1,9 +1,15 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:warhistory/Entities/Soldiers.dart';
 import 'package:warhistory/Theme/theme.dart';
+import 'package:warhistory/Widgets/select_battles.dart';
+import 'package:warhistory/Widgets/select_sources.dart';
 
 import '../../Services/FileUpload.dart';
 
@@ -64,11 +70,11 @@ class _AddSoldierState extends State<AddSoldier> {
                         children: [
                           const Expanded(
                             child: Text(
-                              'Hello World',
+                              'Resim Seçiniz',
                             ),
                           ),
                           IconButton(
-                              onPressed: () async {},
+                              onPressed: () => _updateItems(),
                               icon: Icon(Icons.file_upload_outlined))
                         ],
                       ),
@@ -78,10 +84,12 @@ class _AddSoldierState extends State<AddSoldier> {
                         children: [
                           const Expanded(
                             child: Text(
-                              'Muharebe Seç',
+                              'Muharebe Seçiniz',
                             ),
                           ),
-                          ElevatedButton(onPressed: () {}, child: Text("+"))
+                          ElevatedButton(
+                              onPressed: () => alertDialog(context, true),
+                              child: Text("+"))
                         ],
                       ),
                       Row(
@@ -90,10 +98,12 @@ class _AddSoldierState extends State<AddSoldier> {
                         children: [
                           const Expanded(
                             child: Text(
-                              'Kaynakları Seç',
+                              'Kaynakları Seçiniz',
                             ),
                           ),
-                          ElevatedButton(onPressed: () {}, child: Text("+"))
+                          ElevatedButton(
+                              onPressed: () => alertDialog(context, false),
+                              child: Text("+"))
                         ],
                       ),
                       Row(
@@ -144,11 +154,36 @@ class _AddSoldierState extends State<AddSoldier> {
         Soldier("", name, birthday, birthday, explanation, "", [], _value, []);
   }
 
-  void _updateItems(FilePicker model) {
-    setState(() {
-      var imagePath = model.imagePath;
-      var imagePaths = model.imagePaths;
-      var filePickerResults = model.filePickerResults;
-    });
+  void alertDialog(BuildContext context, bool a) {
+    if (a == true)
+      showDialog(
+          context: context,
+          builder: ((context) {
+            return SelectBattles();
+          }));
+    else
+      showDialog(
+          context: context,
+          builder: ((context) {
+            return SelectSources();
+          }));
+  }
+
+  void _updateItems() async {
+    final result = await FilePicker.platform.pickFiles(
+      allowMultiple: false,
+      type: FileType.image,
+    );
+    if (result == null) {
+    } else {
+      final file = result.files.first;
+      final newFile = await saveDocument(file);
+    }
+  }
+
+  Future<File> saveDocument(PlatformFile file) async {
+    final appStorage = await getApplicationDocumentsDirectory();
+    final newFile = File("${appStorage.path}/${file.name}");
+    return File(file.path!).copy(newFile.path);
   }
 }
