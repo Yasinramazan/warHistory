@@ -1,9 +1,7 @@
 import 'dart:io';
-
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:warhistory/Entities/Soldiers.dart';
@@ -11,16 +9,16 @@ import 'package:warhistory/Theme/theme.dart';
 import 'package:warhistory/Widgets/select_battles.dart';
 import 'package:warhistory/Widgets/select_sources.dart';
 
-import '../../Services/FileUpload.dart';
+import '../../Bloc/AddSoldierBloc/bloc/soldier_bloc_bloc.dart';
 
-class AddSoldier extends StatefulWidget {
-  const AddSoldier({Key? key}) : super(key: key);
+class SoldierView extends StatefulWidget {
+  const SoldierView({Key? key}) : super(key: key);
 
   @override
-  State<AddSoldier> createState() => _AddSoldierState();
+  State<SoldierView> createState() => _AddSoldierState();
 }
 
-class _AddSoldierState extends State<AddSoldier> {
+class _AddSoldierState extends State<SoldierView> {
   var maskFormatter = MaskTextInputFormatter(
       mask: '##/##/####',
       filter: {"#": RegExp(r'[0-9]')},
@@ -155,18 +153,19 @@ class _AddSoldierState extends State<AddSoldier> {
   }
 
   void alertDialog(BuildContext context, bool a) {
-    if (a == true)
+    if (a == true) {
       showDialog(
           context: context,
           builder: ((context) {
             return SelectBattles();
           }));
-    else
+    } else {
       showDialog(
           context: context,
           builder: ((context) {
             return SelectSources();
           }));
+    }
   }
 
   void _updateItems() async {
@@ -185,5 +184,14 @@ class _AddSoldierState extends State<AddSoldier> {
     final appStorage = await getApplicationDocumentsDirectory();
     final newFile = File("${appStorage.path}/${file.name}");
     return File(file.path!).copy(newFile.path);
+  }
+}
+
+class AddSoldier extends StatelessWidget {
+  const AddSoldier({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SoldierView();
   }
 }
