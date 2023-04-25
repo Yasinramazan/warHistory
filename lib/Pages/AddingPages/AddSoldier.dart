@@ -5,6 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:warhistory/Entities/Soldiers.dart';
+import 'package:warhistory/Services/Validator.dart';
+import 'package:warhistory/Services/soldierService.dart';
 import 'package:warhistory/Theme/theme.dart';
 import 'package:warhistory/Widgets/select_battles.dart';
 import 'package:warhistory/Widgets/select_sources.dart';
@@ -24,11 +26,15 @@ class _AddSoldierState extends State<SoldierView> {
       mask: '##/##/####',
       filter: {"#": RegExp(r'[0-9]')},
       type: MaskAutoCompletionType.lazy);
+  final _formKey = GlobalKey<FormState>();
   bool _value = false;
-  String name = "";
-  String birthday = "";
-  String deathday = "";
-  String explanation = "";
+
+  SoldiersService _soldiersService = SoldiersService();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController deathdayController = TextEditingController();
+  TextEditingController birthdayController = TextEditingController();
+  TextEditingController explanationController = TextEditingController();
+  Soldier refSoldier = Soldier("", "", "", "", "", "", [], false, []);
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +45,7 @@ class _AddSoldierState extends State<SoldierView> {
           child: Padding(
             padding: const EdgeInsets.all(10),
             child: Form(
+              key: _formKey,
               child: SizedBox(
                 height: MediaQuery.of(context).size.height * 3 / 2,
                 child: Column(
@@ -47,22 +54,26 @@ class _AddSoldierState extends State<SoldierView> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       TextFormField(
-                        initialValue: name,
+                        controller: nameController,
                         decoration: InputDecoration(labelText: "İsim"),
+                        validator: (value) => TextValidator.validator(value),
                       ),
                       TextFormField(
-                          initialValue: birthday,
+                          controller: birthdayController,
                           decoration: const InputDecoration(
                               labelText: "Doğum Tarihi",
                               hintText: "##/##/####"),
                           keyboardType: TextInputType.datetime,
-                          inputFormatters: [maskFormatter]),
+                          inputFormatters: [maskFormatter],
+                          validator: (value) => TextValidator.validator(value)),
                       TextFormField(
-                          initialValue: deathday,
-                          decoration: const InputDecoration(
-                              labelText: "Ölüm Tarihi", hintText: "##/##/####"),
-                          keyboardType: TextInputType.datetime,
-                          inputFormatters: [maskFormatter]),
+                        controller: deathdayController,
+                        decoration: const InputDecoration(
+                            labelText: "Ölüm Tarihi", hintText: "##/##/####"),
+                        keyboardType: TextInputType.datetime,
+                        inputFormatters: [maskFormatter],
+                        validator: (value) => TextValidator.validator(value),
+                      ),
                       Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -133,12 +144,15 @@ class _AddSoldierState extends State<SoldierView> {
                         ],
                       ),
                       TextFormField(
-                        initialValue: explanation,
+                        controller: explanationController,
                         maxLines: 15,
                         decoration: InputDecoration(labelText: "Açıklama"),
                       ),
                       ElevatedButton(
-                          onPressed: () => saveSoldier(), child: Text("Kaydet"))
+                          onPressed: () {
+                            _saveSoldier();
+                          },
+                          child: Text("Kaydet"))
                     ]),
               ),
             ),
@@ -148,9 +162,15 @@ class _AddSoldierState extends State<SoldierView> {
     );
   }
 
-  void saveSoldier() {
-    Soldier soldier =
-        Soldier("", name, birthday, birthday, explanation, "", [], _value, []);
+  void _saveSoldier() {
+    if (_formKey.currentState!.validate()) {
+      GlobalSoldier.Name = nameController.text;
+      GlobalSoldier.Birthday = birthdayController.text;
+      GlobalSoldier.Deathday = deathdayController.text;
+      GlobalSoldier.Explanation = explanationController.text;
+      _soldiersService.setSoldier(GlobalSoldier);
+      _soldiersService.saveSoldier();
+    }
   }
 
   void alertDialog(BuildContext context, bool a) {

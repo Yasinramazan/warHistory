@@ -85,51 +85,52 @@ final ThemeData myTheme = ThemeData(
           textStyle: const TextStyle(
             fontSize: 15,
           ))),
-  textTheme: const TextTheme(bodyText1: TextStyle(color: Color(0x1f000000))),
+  textTheme: const TextTheme(
+      bodyText1: TextStyle(color: Colors.black, fontSize: 15),
+      bodyText2: TextStyle(color: Colors.black, fontSize: 20)),
   inputDecorationTheme: const InputDecorationTheme(
     labelStyle: TextStyle(
       color: Color(0xdd000000),
-      fontSize: null,
+      fontSize: 20.0,
       fontWeight: FontWeight.w400,
       fontStyle: FontStyle.normal,
     ),
     helperStyle: TextStyle(
       color: Color(0xdd000000),
-      fontSize: null,
+      fontSize: 20.0,
       fontWeight: FontWeight.w400,
       fontStyle: FontStyle.normal,
     ),
     hintStyle: TextStyle(
       color: Color(0xdd000000),
-      fontSize: null,
+      fontSize: 20.0,
       fontWeight: FontWeight.w400,
       fontStyle: FontStyle.normal,
     ),
     errorStyle: TextStyle(
-      color: Color(0xdd000000),
-      fontSize: null,
+      color: Colors.red,
+      fontSize: 10.0,
       fontWeight: FontWeight.w400,
       fontStyle: FontStyle.normal,
     ),
     errorMaxLines: null,
     isDense: false,
-    contentPadding: EdgeInsets.only(top: 24, bottom: 16, left: 12, right: 12),
     isCollapsed: false,
     prefixStyle: TextStyle(
       color: Color(0xdd000000),
-      fontSize: null,
+      fontSize: 20.0,
       fontWeight: FontWeight.w400,
       fontStyle: FontStyle.normal,
     ),
     suffixStyle: TextStyle(
       color: Color(0xdd000000),
-      fontSize: null,
+      fontSize: 20.0,
       fontWeight: FontWeight.w400,
       fontStyle: FontStyle.normal,
     ),
     counterStyle: TextStyle(
       color: Color(0xdd000000),
-      fontSize: null,
+      fontSize: 20.0,
       fontWeight: FontWeight.w400,
       fontStyle: FontStyle.normal,
     ),
@@ -247,7 +248,7 @@ final ThemeData myTheme = ThemeData(
       shape: BeveledRectangleBorder(
     side: BorderSide(
       color: Color(0xff000000),
-      width: 0,
+      width: 10,
       style: BorderStyle.none,
     ),
     borderRadius: BorderRadius.all(Radius.circular(6.0)),
