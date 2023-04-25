@@ -10,6 +10,7 @@ import 'package:warhistory/Widgets/select_battles.dart';
 import 'package:warhistory/Widgets/select_sources.dart';
 
 import '../../Bloc/AddSoldierBloc/bloc/soldier_bloc_bloc.dart';
+import '../../Bloc/AddSoldierBloc/bloc/source_bloc/bloc/source_bloc.dart';
 
 class SoldierView extends StatefulWidget {
   const SoldierView({Key? key}) : super(key: key);
@@ -192,6 +193,16 @@ class AddSoldier extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SoldierView();
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<SourceBloc>(
+          create: (BuildContext context1) => SourceBloc(),
+        ),
+        BlocProvider(
+          create: (context2) => SoldierBlocBloc(),
+        ),
+      ],
+      child: SoldierView(),
+    );
   }
 }
