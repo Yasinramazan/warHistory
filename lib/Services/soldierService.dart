@@ -1,20 +1,22 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:warhistory/Data/SoldierData.dart';
 import 'package:warhistory/Entities/Soldiers.dart';
 
 class SoldiersService {
-  CollectionReference soldiers =
-      FirebaseFirestore.instance.collection("Soldiers");
+  SoldiersService() {
+    _soldierRepository = SoldierRepository();
+  }
+  Soldier _soldier = Soldier("", "", "", "", "", "", [], false, []);
 
-  Future<List<Soldier>> getSoldiers() async {
-    List<Soldier> list = [];
-    final value = await soldiers.get().then((QuerySnapshot querySnapshot) {
-      querySnapshot.docs.forEach((doc) {
-        list.add(doc["Name"]);
-      });
-    });
-    if (value == null)
-      return [];
-    else
-      return list;
+  Soldier get soldier => _soldier;
+
+  void setSoldier(Soldier soldier) {
+    _soldier = soldier;
+  }
+
+  late SoldierRepository _soldierRepository;
+  void saveSoldier() {
+    _soldierRepository.saveSoldier(_soldier);
   }
 }
+
+Soldier GlobalSoldier = Soldier("", "", "", "", "", "", [], false, []);

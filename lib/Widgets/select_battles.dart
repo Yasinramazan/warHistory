@@ -1,13 +1,15 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:warhistory/Services/soldierService.dart';
 import 'package:warhistory/Theme/theme.dart';
 import 'package:warhistory/dummy.dart';
 
 import '../Bloc/AddSoldierBloc/bloc/soldier_bloc_bloc.dart';
 
 class SelectBattles extends StatelessWidget {
-  SelectBattles({Key? key}) : super(key: key) {
+  SelectBattles({
+    Key? key,
+  }) : super(key: key) {
     for (var i = 0; i < battles.length; i++) {
       colors.add(Colors.white);
     }
@@ -52,20 +54,20 @@ class SelectBattles extends StatelessWidget {
                                   if (state is ChangeColorState) {
                                     return Container(
                                       color: state.colors[index],
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(battles[index].Name),
-                                            Checkbox(
-                                                value: state.isSelected[index],
-                                                onChanged: (value) {
-                                                  _changeColor(context, index);
-                                                })
-                                          ],
-                                        ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            battles[index].Name,
+                                            style: myTheme.textTheme.bodyText1,
+                                          ),
+                                          Checkbox(
+                                              value: state.isSelected[index],
+                                              onChanged: (value) {
+                                                _changeColor(context, index);
+                                              })
+                                        ],
                                       ),
                                     );
                                   } else if (state is ChangeColorInitial) {
@@ -75,7 +77,10 @@ class SelectBattles extends StatelessWidget {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Text(battles[index].Name),
+                                          Text(
+                                            battles[index].Name,
+                                            style: myTheme.textTheme.bodyText1,
+                                          ),
                                           Checkbox(
                                               value: false,
                                               onChanged: (value) {
@@ -93,12 +98,23 @@ class SelectBattles extends StatelessWidget {
                           })),
                     ),
                   ),
-                  ElevatedButton(onPressed: () {}, child: Text("Tamam"))
+                  ElevatedButton(
+                      onPressed: () => addBattles(context),
+                      child: Text("Tamam"))
                 ]),
           ),
         ),
       ),
     );
+  }
+
+  void addBattles(BuildContext context) {
+    for (var i = 0; i < battles.length; i++) {
+      if (selects[i] == true) {
+        GlobalSoldier.Battles.add(battles[i].Id);
+      }
+    }
+    Navigator.pop(context);
   }
 
   _changeColor(BuildContext context, int index) {

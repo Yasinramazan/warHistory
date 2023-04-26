@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:warhistory/Services/soldierService.dart';
+import 'package:warhistory/Theme/theme.dart';
 
 import '../Bloc/AddSoldierBloc/bloc/source_bloc/bloc/source_bloc.dart';
 
@@ -7,6 +9,7 @@ class SelectSources extends StatelessWidget {
   SelectSources({Key? key}) : super(key: key);
   int count = 1;
   final soldierBloc = SourceBloc();
+  List<TextEditingController> texts = [];
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -14,12 +17,9 @@ class SelectSources extends StatelessWidget {
         child: BlocProvider(
           create: (context) => SourceBloc(),
           child: Builder(builder: (context) {
-            return Container(
-              decoration: BoxDecoration(
-                  border:
-                      Border.all(color: Theme.of(context).primaryColorDark)),
-              height: MediaQuery.of(context).size.height * .6,
-              width: MediaQuery.of(context).size.width * .6,
+            return SizedBox(
+              height: MediaQuery.of(context).size.height * .7,
+              width: MediaQuery.of(context).size.width * .8,
               child: Card(
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -29,22 +29,80 @@ class SelectSources extends StatelessWidget {
                       const Divider(
                         color: Colors.amber,
                       ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * .3,
-                        width: MediaQuery.of(context).size.width * .5,
+                      Container(
+                        height: MediaQuery.of(context).size.height * .4,
+                        width: MediaQuery.of(context).size.width * .8,
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: Theme.of(context).primaryColorDark)),
                         child: BlocBuilder<SourceBloc, SourceState>(
                           builder: (context, state) {
                             if (state is AddSourceTextFieldInitial) {
+                              texts.add(TextEditingController());
                               return ListView.builder(
                                   itemCount: state.count,
                                   itemBuilder: ((context, index) {
-                                    return TextFormField();
+                                    return Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text("Kaynak ${index + 1}",
+                                              style:
+                                                  myTheme.textTheme.bodyText1),
+                                          SizedBox(
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  .1,
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  .9 /
+                                                  2,
+                                              child: TextFormField(
+                                                  controller: texts[index],
+                                                  style: myTheme
+                                                      .textTheme.bodyText2)),
+                                        ],
+                                      ),
+                                    );
                                   }));
                             } else if (state is AddSourceTextFieldState) {
+                              texts.add(TextEditingController());
+
                               return ListView.builder(
                                   itemCount: state.count,
                                   itemBuilder: ((context, index) {
-                                    return TextFormField();
+                                    return Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            "Kaynak  ${index + 1}",
+                                            style: myTheme.textTheme.bodyText1,
+                                          ),
+                                          SizedBox(
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  .1,
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  .9 /
+                                                  2,
+                                              child: TextFormField(
+                                                controller: texts[index],
+                                                style:
+                                                    myTheme.textTheme.bodyText2,
+                                              )),
+                                        ],
+                                      ),
+                                    );
                                   }));
                             } else {
                               return Container(
@@ -56,7 +114,10 @@ class SelectSources extends StatelessWidget {
                       ),
                       IconButton(
                           onPressed: () => addTextField(context),
-                          icon: const Icon(Icons.add_box_sharp))
+                          icon: const Icon(Icons.add_box_sharp)),
+                      ElevatedButton(
+                          onPressed: () => addSource(context),
+                          child: Text("Tamam"))
                     ]),
               ),
             );
@@ -64,6 +125,13 @@ class SelectSources extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void addSource(BuildContext context) {
+    for (var element in texts) {
+      GlobalSoldier.Sources.add(element.text);
+    }
+    Navigator.pop(context);
   }
 
   addTextField(BuildContext context) {
