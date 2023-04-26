@@ -34,6 +34,7 @@ class _AddSoldierState extends State<SoldierView> {
   TextEditingController deathdayController = TextEditingController();
   TextEditingController birthdayController = TextEditingController();
   TextEditingController explanationController = TextEditingController();
+  File image = File("");
   Soldier refSoldier = Soldier("", "", "", "", "", "", [], false, []);
 
   @override
@@ -74,7 +75,7 @@ class _AddSoldierState extends State<SoldierView> {
                         inputFormatters: [maskFormatter],
                         validator: (value) => TextValidator.validator(value),
                       ),
-                      Row(
+                      /*Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
@@ -87,7 +88,7 @@ class _AddSoldierState extends State<SoldierView> {
                               onPressed: () => _updateItems(),
                               icon: Icon(Icons.file_upload_outlined))
                         ],
-                      ),
+                      ),*/
                       Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -168,6 +169,7 @@ class _AddSoldierState extends State<SoldierView> {
       GlobalSoldier.Birthday = birthdayController.text;
       GlobalSoldier.Deathday = deathdayController.text;
       GlobalSoldier.Explanation = explanationController.text;
+      GlobalSoldier.Stateman = _value;
       _soldiersService.setSoldier(GlobalSoldier);
       _soldiersService.saveSoldier();
     }
@@ -189,7 +191,7 @@ class _AddSoldierState extends State<SoldierView> {
     }
   }
 
-  void _updateItems() async {
+  /* void _updateItems() async {
     final result = await FilePicker.platform.pickFiles(
       allowMultiple: false,
       type: FileType.image,
@@ -198,6 +200,8 @@ class _AddSoldierState extends State<SoldierView> {
     } else {
       final file = result.files.first;
       final newFile = await saveDocument(file);
+      image = newFile;
+      var bytes = await image.readAsBytes();
     }
   }
 
@@ -205,7 +209,7 @@ class _AddSoldierState extends State<SoldierView> {
     final appStorage = await getApplicationDocumentsDirectory();
     final newFile = File("${appStorage.path}/${file.name}");
     return File(file.path!).copy(newFile.path);
-  }
+  }*/
 }
 
 class AddSoldier extends StatelessWidget {
