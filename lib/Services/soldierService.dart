@@ -16,6 +16,7 @@ class SoldiersService {
   late SoldierRepository _soldierRepository;
   void saveSoldier() {
     _soldierRepository.saveSoldier(_soldier);
+    GlobalSoldier = Soldier("", "", "", "", "", "", [], false, []);
   }
 }
 
