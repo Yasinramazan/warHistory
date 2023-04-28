@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:warhistory/Services/soldierService.dart';
 import 'package:warhistory/dummy.dart';
 
 class SoldierPage extends StatelessWidget {
-  const SoldierPage({Key? key}) : super(key: key);
-
+  SoldierPage({Key? key}) : super(key: key);
+  SoldiersService _soldiersService = SoldiersService();
   @override
   Widget build(BuildContext context) {
+    final soldier = _soldiersService.getSoldier();
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(),
@@ -49,9 +51,9 @@ class SoldierPage extends StatelessWidget {
               height: MediaQuery.of(context).size.height * .2,
               child: ListView.builder(
                   itemExtent: 30,
-                  itemCount: soldier.Battles.length,
+                  itemCount: soldier.Battles!.length,
                   itemBuilder: ((context, index) {
-                    return Text(soldier.Battles[index]);
+                    return Text(soldier.Battles![index]);
                   })),
             ),
             const SizedBox(
@@ -77,9 +79,9 @@ class SoldierPage extends StatelessWidget {
               height: MediaQuery.of(context).size.height * .2,
               child: ListView.builder(
                   itemExtent: 30,
-                  itemCount: soldier.Sources.length,
+                  itemCount: soldier.Sources!.length,
                   itemBuilder: ((context, index) {
-                    return Text(soldier.Sources[index]);
+                    return Text(soldier.Sources![index]);
                   })),
             )
           ]),

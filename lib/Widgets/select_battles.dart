@@ -111,7 +111,7 @@ class SelectBattles extends StatelessWidget {
   void addBattles(BuildContext context) {
     for (var i = 0; i < battles.length; i++) {
       if (selects[i] == true) {
-        GlobalSoldier.Battles.add(battles[i].Id);
+        GlobalSoldier.Battles!.add(battles[i].Id);
       }
     }
     Navigator.pop(context);

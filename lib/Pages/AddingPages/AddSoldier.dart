@@ -35,7 +35,16 @@ class _AddSoldierState extends State<SoldierView> {
   TextEditingController birthdayController = TextEditingController();
   TextEditingController explanationController = TextEditingController();
   File image = File("");
-  Soldier refSoldier = Soldier("", "", "", "", "", "", [], false, []);
+  Soldier refSoldier = Soldier(
+      Id: "",
+      Name: "",
+      Birthday: "",
+      Deathday: "",
+      Explanation: "",
+      Photo: "",
+      Battles: [],
+      Stateman: false,
+      Sources: []);
 
   @override
   Widget build(BuildContext context) {
@@ -171,7 +180,13 @@ class _AddSoldierState extends State<SoldierView> {
       GlobalSoldier.Explanation = explanationController.text;
       GlobalSoldier.Stateman = _value;
       _soldiersService.setSoldier(GlobalSoldier);
-      _soldiersService.saveSoldier();
+      int a = _soldiersService.saveSoldier();
+      if (a == 1) {
+        Snackbar.showSnackbar(context, "Kayıt Başarılı");
+        Navigator.pop(context);
+      } else {
+        Snackbar.showSnackbar(context, "Bir hata oluştu, kaydetme başarısız");
+      }
     }
   }
 

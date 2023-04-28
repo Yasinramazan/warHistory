@@ -129,7 +129,7 @@ class SelectSources extends StatelessWidget {
 
   void addSource(BuildContext context) {
     for (var element in texts) {
-      GlobalSoldier.Sources.add(element.text);
+      if (element.text.isNotEmpty || element.text!=null) GlobalSoldier.Sources!.add(element.text);
     }
     Navigator.pop(context);
   }
