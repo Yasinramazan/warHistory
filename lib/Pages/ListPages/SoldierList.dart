@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:warhistory/Pages/AddingPages/AddSoldier.dart';
 import 'package:warhistory/Services/soldierService.dart';
 
+import '../../Bloc/AddSoldierBloc/bloc/soldier_bloc_bloc.dart';
 import '../../Entities/Soldiers.dart';
 
 class SoldierList extends StatelessWidget {
@@ -12,39 +14,44 @@ class SoldierList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: (() {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => AddSoldier()),
-          );
-        }),
-        child: Icon(Icons.add),
-      ),
-      appBar: AppBar(),
-      body: SafeArea(
-          child: Padding(
-        padding: EdgeInsets.all(10.0),
-        child: FutureBuilder<List<Soldier>>(
-          future: soldiersService.getSoldiers(),
-          builder: (context, AsyncSnapshot<List<Soldier>> snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (snapshot.hasData) {
-              return ListView.builder(
-                  itemCount: snapshot.data!.length,
-                  itemBuilder: ((context, index) {
-                    return ListTile(
-                      title: Text(snapshot.data![index].Name),
-                    );
-                  }));
-            } else {
-              return Text("Hiç Veri Yok");
-            }
-          },
+    return BlocProvider(
+      create: (context) => RefreshSoldierBloc(),
+      child: Scaffold(
+        floatingActionButton: FloatingActionButton(
+          onPressed: (() {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => AddSoldier()),
+            );
+          }),
+          child: Icon(Icons.add),
         ),
-      )),
+        appBar: AppBar(),
+        body: SafeArea(
+            child: Padding(
+          padding: EdgeInsets.all(10.0),
+          child: BlocBuilder<RefreshSoldierBloc, SoldierBlocState>(
+            builder: (context, state) {
+              if (state is RefreshSoldierInitialState) {
+                context.read<RefreshSoldierBloc>().add(RefreshSoldierEvent([]));
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else if (state is RefreshSoldierPageState) {
+                return ListView.builder(
+                    itemCount: state.soldiers.length,
+                    itemBuilder: ((context, index) {
+                      return ListTile(
+                        title: Text(state.soldiers[index].Name),
+                      );
+                    }));
+              } else {
+                return Container();
+              }
+            },
+          ),
+        )),
+      ),
     );
   }
 }

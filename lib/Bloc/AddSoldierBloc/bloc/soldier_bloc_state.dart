@@ -16,3 +16,13 @@ class ChangeColorState extends SoldierBlocState {
   int index;
   List<bool> isSelected;
 }
+
+class RefreshSoldierInitialState extends SoldierBlocState {
+  RefreshSoldierInitialState(this.soldiers);
+  List<Soldier> soldiers;
+}
+
+class RefreshSoldierPageState extends SoldierBlocState {
+  RefreshSoldierPageState(this.soldiers);
+  List<Soldier> soldiers;
+}
