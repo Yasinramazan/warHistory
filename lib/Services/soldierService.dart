@@ -5,7 +5,16 @@ class SoldiersService {
   SoldiersService() {
     _soldierRepository = SoldierRepository();
   }
-  Soldier _soldier = Soldier("", "", "", "", "", "", [], false, []);
+  Soldier _soldier = Soldier(
+      Id: "",
+      Name: "",
+      Birthday: "",
+      Deathday: "",
+      Explanation: "",
+      Photo: "",
+      Battles: [],
+      Stateman: false,
+      Sources: []);
 
   Soldier get soldier => _soldier;
 
@@ -14,10 +23,37 @@ class SoldiersService {
   }
 
   late SoldierRepository _soldierRepository;
-  void saveSoldier() {
-    _soldierRepository.saveSoldier(_soldier);
-    GlobalSoldier = Soldier("", "", "", "", "", "", [], false, []);
+  int saveSoldier() {
+    int a = _soldierRepository.saveSoldier(_soldier);
+    GlobalSoldier = Soldier(
+        Id: "",
+        Name: "",
+        Birthday: "",
+        Deathday: "",
+        Explanation: "",
+        Photo: "",
+        Battles: [],
+        Stateman: false,
+        Sources: []);
+    return a;
+  }
+
+  Future<List<Soldier>> getSoldiers() {
+    return _soldierRepository.getSoldiers();
+  }
+
+  Soldier getSoldier() {
+    return GlobalSoldier;
   }
 }
 
-Soldier GlobalSoldier = Soldier("", "", "", "", "", "", [], false, []);
+Soldier GlobalSoldier = Soldier(
+    Id: "",
+    Name: "",
+    Birthday: "",
+    Deathday: "",
+    Explanation: "",
+    Photo: "",
+    Battles: [],
+    Stateman: false,
+    Sources: []);

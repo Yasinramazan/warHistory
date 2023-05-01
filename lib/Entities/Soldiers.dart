@@ -1,18 +1,63 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:warhistory/Entities/Mans.dart';
 
 class Soldier extends Man {
   Soldier(
-      String Id,
-      String Name,
-      String Birthday,
-      String DeathDay,
-      String Explanation,
-      String Photo,
-      this.Battles,
-      this.Stateman,
-      List<String> Sources)
-      : super(Id, Name, Birthday, DeathDay, Explanation, Photo, Sources);
-  List<String> Battles;
+      {required String Id,
+      required String Name,
+      required String Birthday,
+      required String Deathday,
+      required String Explanation,
+      required String Photo,
+      required this.Battles,
+      required this.Stateman,
+      required List<String>? Sources})
+      : super(Id, Name, Birthday, Deathday, Explanation, Photo, Sources);
+  List<String>? Battles;
 
   bool Stateman;
+
+  factory Soldier.fromFirestore(
+      Map<String, dynamic> snapshot, SnapshotOptions? options) {
+    final data = snapshot;
+    return Soldier(
+      Id: data["Id"],
+      Name: data["Name"],
+      Birthday: data["Birthday"],
+      Deathday: data["Deathday"],
+      Explanation: data["Explanation"],
+      Photo: data["Photo"],
+      Battles: data['Battles'] is Iterable ? List.from(data['Battles']) : null,
+      Stateman: data["Stateman"],
+      Sources: data['Sources'] is Iterable ? List.from(data['Sources']) : null,
+    );
+  }
+  static Soldier fromJson(Map<String, dynamic> json) {
+    return Soldier(
+      Id: json["Id"],
+      Name: json["Name"],
+      Birthday: json["Birthday"],
+      Deathday: json["Deathday"],
+      Explanation: json["Explanation"],
+      Photo: json["Photo"],
+      Battles: json['Battles'] is Iterable ? List.from(json['Battles']) : null,
+      Stateman: json["Stateman"],
+      Sources: json['Sources'] is Iterable ? List.from(json['Sources']) : null,
+    );
+  }
+
+  Map<String, dynamic> toFirestore() {
+    return {
+      if (Id != null) "Id": Id,
+      if (Name != null) "Name": Name,
+      if (Birthday != null) "Birthday": Birthday,
+      if (Deathday != null) "Deathday": Deathday,
+      if (Explanation != null) "Explanation": Explanation,
+      if (Explanation != null) "Explanation": Explanation,
+      if (Photo != null) "Photo": Photo,
+      if (Stateman != null) "Stateman": Stateman,
+      if (Battles != null) "Battles": Battles,
+      if (Sources != null) "Sources": Sources,
+    };
+  }
 }
