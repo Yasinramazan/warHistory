@@ -39,6 +39,7 @@ class SoldiersService {
   }
 
   Future<List<Soldier>> getSoldiers() {
+    List<Soldier> soldiers = [];
     return _soldierRepository.getSoldiers();
   }
 

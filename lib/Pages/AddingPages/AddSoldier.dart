@@ -183,7 +183,8 @@ class _AddSoldierState extends State<SoldierView> {
       int a = _soldiersService.saveSoldier();
       if (a == 1) {
         Snackbar.showSnackbar(context, "Kayıt Başarılı");
-        Navigator.pop(context);
+        Navigator.pop(context, true);
+        context.read<RefreshSoldierBloc>().add(RefreshSoldierEmptyEvent([]));
       } else {
         Snackbar.showSnackbar(context, "Bir hata oluştu, kaydetme başarısız");
       }
@@ -240,6 +241,9 @@ class AddSoldier extends StatelessWidget {
         BlocProvider(
           create: (context2) => SoldierBlocBloc(),
         ),
+        BlocProvider(
+          create: (context3) => RefreshSoldierBloc(),
+        )
       ],
       child: SoldierView(),
     );
