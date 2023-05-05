@@ -17,3 +17,8 @@ class RefreshSoldierEvent extends SoldierBlocEvent {
   RefreshSoldierEvent(this.soldiers);
   List<Soldier> soldiers;
 }
+
+class RefreshSoldierEmptyEvent extends SoldierBlocEvent {
+  RefreshSoldierEmptyEvent(this.soldiers);
+  List<Soldier> soldiers;
+}

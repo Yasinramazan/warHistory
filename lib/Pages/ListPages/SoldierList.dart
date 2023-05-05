@@ -34,10 +34,12 @@ class SoldierList extends StatelessWidget {
             builder: (context, state) {
               if (state is RefreshSoldierInitialState) {
                 context.read<RefreshSoldierBloc>().add(RefreshSoldierEvent([]));
+                print("initial");
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
               } else if (state is RefreshSoldierPageState) {
+                print("listview");
                 return ListView.builder(
                     itemCount: state.soldiers.length,
                     itemBuilder: ((context, index) {

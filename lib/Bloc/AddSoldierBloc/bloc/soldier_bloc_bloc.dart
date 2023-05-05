@@ -26,12 +26,19 @@ class SoldierBlocBloc extends Bloc<SoldierBlocEvent, SoldierBlocState> {
 class RefreshSoldierBloc extends Bloc<SoldierBlocEvent, SoldierBlocState> {
   RefreshSoldierBloc() : super(RefreshSoldierInitialState([])) {
     on<RefreshSoldierEvent>(_onRefreshSoldiers);
+    on<RefreshSoldierEmptyEvent>(_onInitialSoldiers);
   }
 
   FutureOr<void> _onRefreshSoldiers(
       RefreshSoldierEvent event, Emitter<SoldierBlocState> emit) async {
     List<Soldier> soldiers = await getSoldiers();
     var result = RefreshSoldierPageState(soldiers);
+    emit(result);
+  }
+
+  FutureOr<void> _onInitialSoldiers(
+      RefreshSoldierEmptyEvent event, Emitter<SoldierBlocState> emit) {
+    var result = RefreshSoldierInitialState([]);
     emit(result);
   }
 
