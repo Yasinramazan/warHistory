@@ -10,8 +10,8 @@ class SoldierRepository {
 
   Future<List<Soldier>> getSoldiers() async {
     List<Soldier> list = [];
-    CollectionReference ref = FirebaseFirestore.instance.collection('Soldiers');
-    final snapshot = await ref.get();
+
+    final snapshot = await soldierFirestore.get();
     List<Map<String, dynamic>> map =
         snapshot.docs.map((doc) => doc.data() as Map<String, dynamic>).toList();
     for (var element in map) {

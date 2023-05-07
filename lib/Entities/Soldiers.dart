@@ -32,19 +32,6 @@ class Soldier extends Man {
       Sources: data['Sources'] is Iterable ? List.from(data['Sources']) : null,
     );
   }
-  static Soldier fromJson(Map<String, dynamic> json) {
-    return Soldier(
-      Id: json["Id"],
-      Name: json["Name"],
-      Birthday: json["Birthday"],
-      Deathday: json["Deathday"],
-      Explanation: json["Explanation"],
-      Photo: json["Photo"],
-      Battles: json['Battles'] is Iterable ? List.from(json['Battles']) : null,
-      Stateman: json["Stateman"],
-      Sources: json['Sources'] is Iterable ? List.from(json['Sources']) : null,
-    );
-  }
 
   Map<String, dynamic> toFirestore() {
     return {
@@ -52,7 +39,6 @@ class Soldier extends Man {
       if (Name != null) "Name": Name,
       if (Birthday != null) "Birthday": Birthday,
       if (Deathday != null) "Deathday": Deathday,
-      if (Explanation != null) "Explanation": Explanation,
       if (Explanation != null) "Explanation": Explanation,
       if (Photo != null) "Photo": Photo,
       if (Stateman != null) "Stateman": Stateman,

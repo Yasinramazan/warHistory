@@ -4,7 +4,25 @@ import 'package:warhistory/Entities/Wars.dart';
 
 List<Battle> battles = [
   Battle(
-      "1", ["İngiltere"], ["Almanya"], "El Alamein", "1943", "1", [], "1", []),
-  Battle("2", ["Yunanistan"], ["Türkiye"], "Büyük Tarruz", "1922", "2", [], "2",
-      [])
+      Id: "",
+      Winners: [],
+      Losers: [],
+      Name: "2",
+      Date: "",
+      MapId: "",
+      Soldiers: [],
+      WarId: "",
+      Sources: [],
+      Explanation: ""),
+  Battle(
+      Id: "",
+      Winners: [],
+      Losers: [],
+      Name: "1",
+      Date: "",
+      MapId: "",
+      Soldiers: [],
+      WarId: "",
+      Sources: [],
+      Explanation: "")
 ];
