@@ -202,7 +202,9 @@ class _AddSoldierState extends State<SoldierView> {
       showDialog(
           context: context,
           builder: ((context) {
-            return SelectSources();
+            return SelectSources(
+              select: 0,
+            );
           }));
     }
   }
