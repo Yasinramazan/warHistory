@@ -98,20 +98,7 @@ class _addBattlePage extends State<BattleView> {
                               icon: Icon(Icons.file_upload_outlined))
                         ],
                       ),*/
-                      Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          const Expanded(
-                            child: Text(
-                              'Muharebe Seçiniz',
-                            ),
-                          ),
-                          ElevatedButton(
-                              onPressed: () => alertDialog(context, true),
-                              child: Text("+"))
-                        ],
-                      ),
+
                       Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -122,7 +109,8 @@ class _addBattlePage extends State<BattleView> {
                             ),
                           ),
                           ElevatedButton(
-                              onPressed: () => alertDialog(context, false),
+                              onPressed: () =>
+                                  alertWinnersDialog(context, false),
                               child: Text("+"))
                         ],
                       ),
@@ -191,11 +179,11 @@ class _addBattlePage extends State<BattleView> {
     }
   }
 
-  void alertDialog(BuildContext context, bool a) {
+  void alertWinnersDialog(BuildContext context, bool a) {
     showDialog(
         context: context,
         builder: ((context) {
-          return SelectSources();
+          return SelectSources(select: 1);
         }));
   }
 }
@@ -205,19 +193,6 @@ class AddBattle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<SourceBloc>(
-          create: (BuildContext context1) => SourceBloc(),
-        ),
-        BlocProvider(
-          create: (context2) => SoldierBlocBloc(),
-        ),
-        BlocProvider(
-          create: (context3) => RefreshSoldierBloc(),
-        )
-      ],
-      child: AddBattle(),
-    );
+    return BattleView();
   }
 }
