@@ -183,7 +183,7 @@ class _addBattlePage extends State<BattleView> {
     showDialog(
         context: context,
         builder: ((context) {
-          return SelectSources(select: 1);
+          return SelectSources();
         }));
   }
 }
