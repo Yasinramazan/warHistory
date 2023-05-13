@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:warhistory/Services/battleService.dart';
 import 'package:warhistory/Services/soldierService.dart';
 import 'package:warhistory/Theme/theme.dart';
 
 import '../Bloc/AddSoldierBloc/bloc/source_bloc/bloc/source_bloc.dart';
 
 class SelectSources extends StatelessWidget {
-  SelectSources({Key? key, required this.select}) : super(key: key);
+  SelectSources({Key? key}) : super(key: key);
   int count = 1;
-  int select;
   final soldierBloc = SourceBloc();
   List<TextEditingController> texts = [];
   @override
@@ -27,7 +25,7 @@ class SelectSources extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Text("$_selectedText"),
+                      Text("Kaynakları Giriniz"),
                       const Divider(
                         color: Colors.amber,
                       ),
@@ -50,7 +48,7 @@ class SelectSources extends StatelessWidget {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Text("$_getTextField ${index + 1}",
+                                          Text("Kaynak ${index + 1}",
                                               style:
                                                   myTheme.textTheme.bodyText1),
                                           SizedBox(
@@ -84,7 +82,7 @@ class SelectSources extends StatelessWidget {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            "$_getTextField  ${index + 1}",
+                                            "Kaynak  ${index + 1}",
                                             style: myTheme.textTheme.bodyText1,
                                           ),
                                           SizedBox(
@@ -119,7 +117,7 @@ class SelectSources extends StatelessWidget {
                           icon: const Icon(Icons.add_box_sharp)),
                       ElevatedButton(
                           onPressed: () => addSource(context),
-                          child: const Text("Tamam"))
+                          child: Text("Tamam"))
                     ]),
               ),
             );
@@ -129,46 +127,11 @@ class SelectSources extends StatelessWidget {
     );
   }
 
-  String? _getTextField() {
-    if (select == 0) {
-      return "Kaynak";
-    } else if (select == 1) {
-      return "Kazanan";
-    } else if (select == 2) {
-      return "Kaybeden";
-    }
-    return "";
-  }
-
-  String? _selectedText() {
-    if (select == 0) {
-      return "Kaynakları Seçiniz";
-    } else if (select == 1) {
-      return "Kazananları Seçiniz";
-    } else if (select == 2) {
-      return "Kaybedenleri Seçiniz";
-    }
-    return "";
-  }
-
   void addSource(BuildContext context) {
-    if (select == 0) {
-      for (var element in texts) {
-        if (element.text.isNotEmpty || element.text != null)
-          GlobalSoldier.Sources!.add(element.text);
-      }
-    } else if (select == 1) {
-      for (var element in texts) {
-        if (element.text.isNotEmpty || element.text != null)
-          GlobalBattle.Winners.add(element.text);
-      }
-    } else if (select == 2) {
-      for (var element in texts) {
-        if (element.text.isNotEmpty || element.text != null)
-          GlobalBattle.Losers.add(element.text);
-      }
+    for (var element in texts) {
+      if (element.text.isNotEmpty || element.text != null)
+        GlobalSoldier.Sources!.add(element.text);
     }
-
     Navigator.pop(context);
   }
 
