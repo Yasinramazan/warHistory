@@ -68,22 +68,7 @@ class _addBattlePage extends State<BattleView> {
                         decoration: InputDecoration(labelText: "İsim"),
                         validator: (value) => TextValidator.validator(value),
                       ),
-                      TextFormField(
-                          controller: birthdayController,
-                          decoration: const InputDecoration(
-                              labelText: "Doğum Tarihi",
-                              hintText: "##/##/####"),
-                          keyboardType: TextInputType.datetime,
-                          inputFormatters: [maskFormatter],
-                          validator: (value) => TextValidator.validator(value)),
-                      TextFormField(
-                        controller: deathdayController,
-                        decoration: const InputDecoration(
-                            labelText: "Ölüm Tarihi", hintText: "##/##/####"),
-                        keyboardType: TextInputType.datetime,
-                        inputFormatters: [maskFormatter],
-                        validator: (value) => TextValidator.validator(value),
-                      ),
+                      
                       /*Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
